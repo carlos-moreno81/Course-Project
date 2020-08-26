@@ -7,7 +7,6 @@ output: html_document
 
 
 ## Code Book
-1. The run_analysis.R script performs the data preparation,Download the dataset and extracted under the folder called UCI HAR Dataset
 ```{r}
 library(dplyr)
 filename <- "Assignment_CleaningData.zip"
@@ -19,23 +18,6 @@ if (!file.exists(filename)){
 if (!file.exists("UCI HAR Dataset")) { 
   unzip(filename)}
 ```
- 2. Assign each data to variables:
-  
-features <- The features selected for this database come from the accelerometer and gyroscope. 
-  
-activities <- List of activities performed when the corresponding measurements.
-  
-subject_test <- contains test data of  volunteer test subjects being observed.
-  
-x_test <-contains recorded features test data.
-  
-y_test <- contains test data of activities’code labels.
-  
-subject_train <- contains train data of volunteer subjects being observed.
-  
-x_train <-contains recorded features train data.
-  
-y_train <-contains train data of activities’code labels.
 
 
 ```{r}
@@ -48,15 +30,6 @@ subject_train <- read.table("UCI HAR Dataset/train/subject_train.txt", col.names
 x_train <- read.table("UCI HAR Dataset/train/X_train.txt", col.names = feature$functions)
 y_train <- read.table("UCI HAR Dataset/train/y_train.txt", col.names = "code")
 ```
-3. Merges the training and the test sets.
-
--X is created by merging x_train and x_test.
-  
--Y is created by merging y_train and y_test.
-
-- Subject is created by merging subject_train and subject_test.
-
--Merged_Data is created by merging Subject, Y and X.
 
 ```{r}
 X <- rbind(x_train, x_test)
@@ -65,7 +38,7 @@ Subject <- rbind(subject_train, subject_test)
 Merged_Data <- cbind(Subject, Y, X)
 ```
 
-4. Extractsthe mean and standard deviation and Uses descriptive activity names;Appropriately labels the data set .
+
 
 ```{r}
 TData <- Merged_Data %>% select(subject, code, contains("mean"), contains("std"))
@@ -87,7 +60,6 @@ names(TData)<-gsub("angle", "Angle", names(TData))
 names(TData)<-gsub("gravity", "Gravity", names(TData))
 ```
 
-5.Create file "ResultData.txt".
 
 ```{r}
 ResultData <- TData %>%
